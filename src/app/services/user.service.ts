@@ -5,7 +5,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private registeredUsers: any[] = [];
+  private registeredUsers: any[] = [
+    { email: 'kareem@gmail.com', password: '123123123' },
+  ];
   private usersSubject = new BehaviorSubject<any[]>([]);
   private currentUserSubject = new BehaviorSubject<any>(null);
 

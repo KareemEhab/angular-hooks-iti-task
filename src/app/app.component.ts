@@ -15,16 +15,8 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  registeredUsers: any[] = [];
-
+export class AppComponent {
   constructor(private userService: UserService, private router: Router) {}
-
-  ngOnInit() {
-    this.userService.registeredUsers$.subscribe((users) => {
-      this.registeredUsers = users;
-    });
-  }
 
   isLoggedIn() {
     return this.userService.isAuthenticated();
