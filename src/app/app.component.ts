@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +15,23 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') === 'true';
+export class AppComponent implements OnInit {
+  registeredUsers: any[] = [];
+
+  constructor(private userService: UserService, private router: Router) {}
+
+  ngOnInit() {
+    this.userService.registeredUsers$.subscribe((users) => {
+      this.registeredUsers = users;
+    });
   }
 
-  logout(): void {
-    localStorage.removeItem('isLoggedIn');
+  isLoggedIn() {
+    return this.userService.isAuthenticated();
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }
